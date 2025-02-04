@@ -1,0 +1,60 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const nameInput = document.getElementById("nameInput");
+    const addButton = document.getElementById("addButton");
+    const drawButton = document.getElementById("drawButton");
+    const nameList = document.getElementById("nameList");
+    const result = document.getElementById("result");
+    let names = [];
+
+    addButton.addEventListener("click", () => {
+        const name = nameInput.value.trim();
+        if (!name) {
+            alert("Por favor, ingrese un nombre válido.");
+            return;
+        }
+        if (!names.includes(name)) {
+            names.push(name);
+            updateList();
+            nameInput.value = "";
+        } else {
+            alert("Este nombre ya ha sido agregado.");
+        }
+    });
+
+    drawButton.addEventListener("click", () => {
+        if (names.length > 0) {
+            const randomIndex = Math.floor(Math.random() * names.length);
+            result.textContent = `El amigo secreto es: ${names[randomIndex]}`;
+        } else {
+            result.textContent = "Agrega nombres antes de sortear";
+        }
+    });
+
+    function updateList() {
+        nameList.innerHTML = "";
+        names.forEach(name => {
+            const li = document.createElement("li");
+            li.textContent = name;
+            nameList.appendChild(li);
+        });
+    }
+});
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelector(".container").innerHTML = `
+        <div class="container__contenido">
+            <img src="./img/robot.png" alt="Robot" class="container__imagen-robot" />
+            <div class="container__informaciones">
+                <img src="./img/trophy.png" alt="Icono de trofeo" />
+                <div class="container__texto">
+                    <h1><span class="container__texto-azul">Amigo Secreto</span></h1>
+                    <h2>Ingresa los nombres y realiza el sorteo</h2>
+                </div>
+                <input type="text" id="nameInput" placeholder="Ingresa un nombre" />
+                <button id="addButton">Adicionar</button>
+                <ul id="nameList"></ul>
+                <button id="drawButton">Sortear Amigo</button>
+                <p id="result"></p>
+            </div>
+        </div>
+    `;
+});
